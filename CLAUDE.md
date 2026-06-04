@@ -1,4 +1,60 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 @AGENTS.md
+
+## Commands
+
+```bash
+# Start dev server (choose platform interactively)
+npm start
+
+# Platform-specific
+npm run android
+npm run ios
+npm run web
+
+# Lint
+npm run lint
+```
+
+No test runner is configured yet.
+
+## Architecture
+
+This is an **Expo SDK 56** app using **Expo Router** for file-based routing.
+
+### Non-standard source layout
+
+App screens live in **`src/app/`**, not the default `app/`. The `package.json` entry point is `expo-router/entry`, which picks this up via `tsconfig.json` path aliases:
+
+- `@/*` → `./src/*`
+- `@/assets/*` → `./assets/*`
+
+New routes, layouts, and shared code all go under `src/`.
+
+### Key dependencies
+
+| Package | Version | Notes |
+|---|---|---|
+| `expo-router` | ~56.2.8 | File-based routing |
+| `react-native-reanimated` | 4.3.1 | Animations |
+| `react-native-gesture-handler` | ~2.31.1 | Gestures |
+| `@expo/ui` | ~56.0.15 | Expo UI components |
+| `expo-glass-effect` | ~56.0.4 | Glass UI primitives |
+| `expo-symbols` | ~56.0.5 | SF Symbols + Material icons |
+
+### Enabled experiments (`app.json`)
+
+- `typedRoutes` — Expo Router generates typed `href` params; use `Href` type from `expo-router`.
+- `reactCompiler` — React 19 compiler is active; avoid manual `useMemo`/`useCallback` unless profiling shows a need.
+
+### Notable config
+
+- Android `predictiveBackGestureEnabled: false` — back gesture is disabled system-wide.
+- Web output is `static` (no server-side rendering).
+- Supports automatic light/dark color scheme (`userInterfaceStyle: "automatic"`).
 
 # CLAUDE.md - React Native & Expo Project Guidelines
 
@@ -9,9 +65,10 @@
 - **Database/Storage**: Expo SQLite or expo-file-system + MMKV (Never use AsyncStorage)
 
 ## Critical AI Instructions
-- ALWAYS prioritize the [Expo Skills for AI agents](https://docs.expo.dev/skills/) and the [Expo MCP Server](https://docs.expo.dev/eas/ai/mcp/) capabilities if available.
+- ALWAYS prioritize the [Expo Skills for AI agents](https://docs.expo.dev/skills.md) and the [Expo MCP Server](https://docs.expo.dev/eas/ai/mcp.md) capabilities if available.
 - NEVER modify `/android` or `/ios` native directories directly. Always use Expo Config Plugins in `app.json` or `app.config.js`.
 - Cross-Platform Aware: Test and account for both iOS and Android presentation quirks (e.g., SafeAreas, KeyboardAvoidingView configurations).
+- ALWAYS store keys in the .env.local file to ensure no secrets are leaked into a public repo
 
 ## Essential Development Commands
 
@@ -60,6 +117,7 @@ Follow a strict **feature-based structure** for modularity:
 ```
 
 ### Strict Code Rules
+- **Braces** Use Allman-style brace placement: open `{` on its own new line for function bodies, if/else, and other control flow blocks.
 - **Imports**: Always use absolute path mapping configurations prefixed with `@/` (e.g., `import { Button } from '@/components/ui/button'`).
 - **Components**: Write clean functional components using exact arrow syntax (`const Component = () => {}`).
 - **Styling**: Always leverage the NativeWind implementation pattern (`className="..."`). Keep layouts flexible utilizing Flexbox styles. 
