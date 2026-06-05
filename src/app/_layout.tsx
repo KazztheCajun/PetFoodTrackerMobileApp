@@ -2,6 +2,7 @@ import { ClerkProvider, useAuth } from '@clerk/expo'
 import { tokenCache } from '@clerk/expo/token-cache'
 import { Stack } from 'expo-router'
 import { ActivityIndicator, View } from 'react-native'
+import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context'
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
 if (!publishableKey)
@@ -36,8 +37,10 @@ function RootLayoutNav()
 export default function RootLayout()
 {
   return (
-    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <RootLayoutNav />
-    </ClerkProvider>
+    <SafeAreaProvider initialWindowMetrics={initialWindowMetrics}>
+      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+        <RootLayoutNav />
+      </ClerkProvider>
+    </SafeAreaProvider>
   )
 }
