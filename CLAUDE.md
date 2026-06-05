@@ -73,19 +73,9 @@ New routes, layouts, and shared code all go under `src/`.
 ## Essential Development Commands
 
 ### Environment & Dependencies
-- `bun install` — Install dependencies (Strictly use Bun, DO NOT use npm or yarn)
 - `npx expo install <package>` — ALWAYS use this command when adding any Expo SDK native modules
+- `npm install <package>` - ALWAYS use this command when adding a Node.js package/module
 
-### Development & Simulation
-- `bun run dev` — Start the Expo Metro bundler server
-- `bun run dev --ios` — Boot up and run on the iOS Simulator
-- `bun run dev --android` — Boot up and run on the Android Emulator
-- `bun run typecheck` — Run TypeScript compiler diagnostic checks
-- `bun run lint` — Validate code rules and syntax constraints using ESLint
-
-### Testing
-- `bun test` — Run unit and component test suites via Vitest / Jest
-- `maestro test .maestro/` — Execute end-to-end user flows and UI integration validations
 
 ### Production & Distribution (EAS)
 - `eas build -p ios --profile preview` — Create an internal testing build for iOS (TestFlight / AdHoc)
