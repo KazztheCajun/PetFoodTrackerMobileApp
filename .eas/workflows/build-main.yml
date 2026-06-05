@@ -10,9 +10,5 @@ jobs:
    name: Build For Android
    type: build
    params:
-     platform: android
-  build_ios:
-   name: Build for iOS
-   type: build
-   params:
-     platform: ios
+    platform: android
+    profile: development
