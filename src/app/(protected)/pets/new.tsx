@@ -1,11 +1,11 @@
+import { useCreatePet } from '@/features/pets/api/useMutatePet'
+import { PetForm } from '@/features/pets/components/PetForm'
+import type { PetFormValues } from '@/features/pets/schema'
 import { useAuth } from '@clerk/expo'
+import { AntDesign } from '@expo/vector-icons'
 import { router } from 'expo-router'
 import { Alert, KeyboardAvoidingView, Platform, Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { AntDesign } from '@expo/vector-icons'
-import { PetForm } from '@/features/pets/components/PetForm'
-import { useCreatePet } from '@/features/pets/api/useMutatePet'
-import type { PetFormValues } from '@/features/pets/schema'
 
 export default function NewPetScreen()
 {
@@ -29,6 +29,8 @@ export default function NewPetScreen()
     {
       const raw = error instanceof Error ? error.message.toLowerCase() : ''
       const petName = values.name || 'your pet'
+
+      console.log(raw)
 
       let title = `Couldn't Save ${petName}`
       let message = 'Something went wrong. Please try again.'
