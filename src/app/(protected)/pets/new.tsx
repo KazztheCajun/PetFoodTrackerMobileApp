@@ -14,15 +14,40 @@ export default function NewPetScreen()
 
   const handleSubmit = async (values: PetFormValues) =>
   {
-    if (!userId) return
+    if (!userId)
+    {
+      Alert.alert('Not Signed In', 'You must be signed in to add a pet.')
+      return
+    }
+
     try
     {
       await createPet({ ...values, userId })
       router.back()
     }
-    catch
+    catch (error)
     {
-      Alert.alert('Error', 'Failed to add pet. Please try again.')
+      const raw = error instanceof Error ? error.message.toLowerCase() : ''
+      const petName = values.name || 'your pet'
+
+      let title = `Couldn't Save ${petName}`
+      let message = 'Something went wrong. Please try again.'
+
+      if (raw.includes('no such table') || raw.includes('not initialized'))
+      {
+        message = 'The database isn\'t ready yet. Please close and reopen the app, then try again.'
+      }
+      else if (raw.includes('disk') || raw.includes('ioerr') || raw.includes('readonly'))
+      {
+        message = 'A storage error occurred. Make sure your device has free space and try again.'
+      }
+      else if (raw.includes('unique constraint'))
+      {
+        title = 'Duplicate Pet'
+        message = `A pet named "${petName}" already exists. Please use a different name.`
+      }
+
+      Alert.alert(title, message, [{ text: 'OK' }])
     }
   }
 
