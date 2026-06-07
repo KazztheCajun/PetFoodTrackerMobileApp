@@ -8,7 +8,7 @@ export default function SignIn()
 
   if (isSignedIn)
   {
-    return <Redirect href="/(protected)/pets/home" />
+    return <Redirect href="/(protected)/pets" />
   }
 
   return <AuthView mode="signInOrUp" />

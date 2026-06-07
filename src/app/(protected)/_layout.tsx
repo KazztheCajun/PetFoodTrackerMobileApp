@@ -4,12 +4,11 @@ import { Drawer } from 'expo-router/drawer'
 export default function ProtectedLayout()
 {
   return (
-    <Drawer drawerContent={(props) => <DrawerContent {...props} />}>
+    <Drawer drawerContent={(props) => <DrawerContent {...(props as any)} />}>
       <Drawer.Screen
-        name="pets/[id]"
+        name="pets"
         options={{
-          drawerLabel: 'Home',
-          title: 'Home',
+          drawerLabel: 'My Pets',
           headerShown: false,
         }}
       />

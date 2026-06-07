@@ -17,7 +17,7 @@ export default function Index()
 
   if (isSignedIn)
   {
-    return <Redirect href="/(protected)/pets/home" />
+    return <Redirect href="/(protected)/pets" />
   }
 
   return <Redirect href="/(auth)/sign-in" />

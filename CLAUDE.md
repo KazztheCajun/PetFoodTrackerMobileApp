@@ -89,7 +89,8 @@ Follow a strict **feature-based structure** for modularity:
 ```text
 ├── app/                  # Expo Router file-based navigation tree
 │   ├── (auth)/           # Protected authentication route group
-│   ├── (tabs)/           # Main application nested tab navigation layout
+│   ├── (protected)/      # Main application nested tab navigation layout
+|   |   ├── pets/         # List of pets a logged in user has
 │   │   ├── index.tsx     # Main feed screen
 │   │   └── profile.tsx   # User configuration screen
 │   ├── _layout.tsx       # Root entry, state provider wrappers, and universal styling
