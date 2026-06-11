@@ -5,6 +5,7 @@ export const feedingSchema = z.object({
   foodType: z.string().min(1, 'Food type is required'),
   amount: z.coerce.number().positive('Amount must be a positive number'),
   unit: z.enum(FOOD_UNITS),
+  amountEaten: z.coerce.number().positive().nullable().optional(),
   fedAt: z.number(),
   notes: z.string().optional(),
 })

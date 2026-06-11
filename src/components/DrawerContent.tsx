@@ -1,5 +1,7 @@
-import { useUser, useUserProfileModal } from '@clerk/expo'
-import { Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useUser } from '@clerk/expo'
+import { router } from 'expo-router'
+import { Image, Pressable, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 interface DrawerRoute
 {
@@ -23,6 +25,7 @@ interface DrawerContentProps
   }
   navigation: {
     navigate: (name: string) => void
+    closeDrawer: () => void
   }
   descriptors: Record<string, DrawerDescriptor>
 }
@@ -30,19 +33,31 @@ interface DrawerContentProps
 export default function DrawerContent({ state, navigation, descriptors }: DrawerContentProps)
 {
   const { user } = useUser()
-  const { presentUserProfile } = useUserProfileModal()
+  const insets = useSafeAreaInsets()
+
+  const initials = [user?.firstName?.[0], user?.lastName?.[0]]
+    .filter(Boolean)
+    .join('')
+    .toUpperCase()
+    || user?.primaryEmailAddress?.emailAddress?.[0]?.toUpperCase()
+    || '?'
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Pet Food Tracker</Text>
-        <TouchableOpacity onPress={presentUserProfile} style={styles.avatarButton}>
+    <ScrollView
+      className="flex-1 bg-white dark:bg-gray-900"
+      contentContainerStyle={{ flexGrow: 1, paddingTop: insets.top, paddingBottom: insets.bottom }}
+    >
+      <View className="flex-row items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700 mb-2">
+        <Text className="text-lg font-bold text-gray-900 dark:text-white">Pet Food Tracker</Text>
+        <TouchableOpacity onPress={() => { navigation.closeDrawer(); router.push('/(protected)/pets/profile') }} className="rounded-full overflow-hidden">
           {user?.imageUrl
             ? (
-                <Image source={{ uri: user.imageUrl }} style={styles.avatar} />
+                <Image source={{ uri: user.imageUrl }} className="w-10 h-10 rounded-full" />
               )
             : (
-                <View style={styles.avatarPlaceholder} />
+                <View className="w-10 h-10 rounded-full bg-blue-500 items-center justify-center">
+                  <Text className="text-sm font-bold text-white">{initials}</Text>
+                </View>
               )}
         </TouchableOpacity>
       </View>
@@ -57,9 +72,15 @@ export default function DrawerContent({ state, navigation, descriptors }: Drawer
           <Pressable
             key={route.key}
             onPress={() => navigation.navigate(route.name)}
-            style={[styles.item, isFocused && styles.itemFocused]}
+            className={`mx-2 my-0.5 px-4 py-3 rounded-xl ${isFocused ? 'bg-blue-50 dark:bg-blue-900/30' : ''}`}
           >
-            <Text style={[styles.itemLabel, isFocused && styles.itemLabelFocused]}>
+            <Text
+              className={
+                isFocused
+                  ? 'text-sm font-semibold text-blue-500'
+                  : 'text-sm font-medium text-gray-700 dark:text-gray-300'
+              }
+            >
               {typeof label === 'string' ? label : route.name}
             </Text>
           </Pressable>
@@ -68,57 +89,3 @@ export default function DrawerContent({ state, navigation, descriptors }: Drawer
     </ScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#e0e0e0',
-    marginBottom: 8,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  avatarButton: {
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  avatarPlaceholder: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#e0e0e0',
-  },
-  item: {
-    marginHorizontal: 8,
-    marginVertical: 2,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 8,
-  },
-  itemFocused: {
-    backgroundColor: '#e8f0fe',
-  },
-  itemLabel: {
-    fontSize: 14,
-    color: '#374151',
-    fontWeight: '500',
-  },
-  itemLabelFocused: {
-    color: '#208AEF',
-    fontWeight: '600',
-  },
-})

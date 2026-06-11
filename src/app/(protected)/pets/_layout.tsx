@@ -9,6 +9,8 @@ export default function PetsLayout()
       <Stack.Screen name="new" options={{ presentation: 'modal' }} />
       <Stack.Screen name="edit" options={{ presentation: 'modal' }} />
       <Stack.Screen name="feeding-new" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="feeding-edit" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="profile" options={{ presentation: 'modal' }} />
     </Stack>
   )
 }

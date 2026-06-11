@@ -12,6 +12,13 @@ export default function ProtectedLayout()
           headerShown: false,
         }}
       />
+      <Drawer.Screen
+        name="analytics"
+        options={{
+          drawerLabel: 'Feeding Overview',
+          headerShown: false,
+        }}
+      />
     </Drawer>
   )
 }

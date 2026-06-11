@@ -8,6 +8,7 @@ export interface FoodEvent
   foodType: string
   amount: number
   unit: FoodUnit
+  amountEaten: number | null
   fedAt: number
   notes: string | null
   createdAt: number
@@ -21,6 +22,7 @@ export interface FoodEventRow
   food_type: string
   amount: number
   unit: string
+  amount_eaten: number | null
   fed_at: number
   notes: string | null
   created_at: number
@@ -35,6 +37,7 @@ export function rowToFoodEvent(row: FoodEventRow): FoodEvent
     foodType: row.food_type,
     amount: row.amount,
     unit: row.unit as FoodUnit,
+    amountEaten: row.amount_eaten ?? null,
     fedAt: row.fed_at,
     notes: row.notes,
     createdAt: row.created_at,

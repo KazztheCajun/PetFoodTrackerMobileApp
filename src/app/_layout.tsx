@@ -3,6 +3,7 @@ import { ClerkProvider, useAuth } from '@clerk/expo'
 import { tokenCache } from '@clerk/expo/token-cache'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
 import { useEffect } from 'react'
 import { ActivityIndicator, View } from 'react-native'
 import { initialWindowMetrics, SafeAreaProvider } from 'react-native-safe-area-context'
@@ -35,7 +36,7 @@ function RootLayoutNav()
   if (!isLoaded)
   {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View className="flex-1 items-center justify-center bg-white dark:bg-gray-900">
         <ActivityIndicator size="large" />
       </View>
     )
@@ -56,7 +57,8 @@ export default function RootLayout()
 {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+      <StatusBar style="auto" />
+      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache} treatPendingAsSignedOut={false}>
         <QueryClientProvider client={queryClient}>
           <RootLayoutNav />
         </QueryClientProvider>

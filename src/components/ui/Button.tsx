@@ -12,13 +12,13 @@ interface ButtonProps
 
 const variantContainer = {
   primary: 'bg-blue-500',
-  secondary: 'bg-gray-100 border border-gray-200',
+  secondary: 'bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600',
   destructive: 'bg-red-500',
 }
 
 const variantText = {
   primary: 'text-white',
-  secondary: 'text-gray-700',
+  secondary: 'text-gray-700 dark:text-gray-200',
   destructive: 'text-white',
 }
 
@@ -41,7 +41,7 @@ export const Button = ({
     >
       {loading
         ? (
-            <ActivityIndicator size="small" color={variant === 'secondary' ? '#374151' : '#fff'} />
+            <ActivityIndicator size="small" color={variant === 'secondary' ? '#9ca3af' : '#fff'} />
           )
         : (
             <Text className={`text-base font-semibold ${variantText[variant]}`}>

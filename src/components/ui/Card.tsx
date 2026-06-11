@@ -11,7 +11,7 @@ export const Card = ({ children, className = '', ...props }: CardProps) =>
 {
   return (
     <View
-      className={`bg-white rounded-2xl p-4 shadow-sm border border-gray-100 ${className}`}
+      className={`bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 ${className}`}
       {...props}
     >
       {children}

@@ -19,6 +19,7 @@ export const CREATE_FOOD_EVENTS_TABLE = `
     food_type TEXT NOT NULL,
     amount REAL NOT NULL,
     unit TEXT NOT NULL,
+    amount_eaten REAL,
     fed_at INTEGER NOT NULL,
     notes TEXT,
     created_at INTEGER NOT NULL,

@@ -94,7 +94,7 @@ export const PetForm = ({ defaultValues, onSubmit, submitLabel = 'Save' }: PetFo
       <form.Field name="weightUnit">
         {(field) => (
           <View style={{ gap: 4 }}>
-            <Text className="text-sm font-medium text-gray-700">Weight Unit</Text>
+            <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">Weight Unit</Text>
             <View className="flex-row gap-2">
               {WEIGHT_UNITS.map((unit) => (
                 <Pressable
@@ -103,11 +103,15 @@ export const PetForm = ({ defaultValues, onSubmit, submitLabel = 'Save' }: PetFo
                   className={`flex-1 py-3 rounded-xl border items-center ${
                     field.state.value === unit
                       ? 'bg-blue-500 border-blue-500'
-                      : 'bg-gray-50 border-gray-200'
+                      : 'bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600'
                   }`}
                 >
                   <Text
-                    className={field.state.value === unit ? 'text-white font-semibold' : 'text-gray-700'}
+                    className={
+                      field.state.value === unit
+                        ? 'text-white font-semibold'
+                        : 'text-gray-700 dark:text-gray-300'
+                    }
                   >
                     {unit}
                   </Text>
